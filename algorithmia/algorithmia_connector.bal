@@ -12,16 +12,15 @@ public type AlgorithmiaConnector object {
         self.client.init(hc);
     }
 
-    public function pipe(string algorithm, string input) returns AlgoResponse|error;
+    public function pipe(string algorithm, json input) returns AlgoResponse|error;
 
 };
 
-function AlgorithmiaConnector::pipe(string algorithm, string input) returns AlgoResponse|error {
+function AlgorithmiaConnector::pipe(string algorithm, json input) returns AlgoResponse|error {
     endpoint http:Client httpClient = self.client;
     http:Request request = new;
-    json payload = input;
     request.setHeader("Authorization", "Simple " + self.config.apiKey);
-    request.setJsonPayload(untaint payload);
+    request.setJsonPayload(untaint input);
     var response = httpClient->post("/" + algorithm, request);
     match response {
         http:Response httpResponse => {
