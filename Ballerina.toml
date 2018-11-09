@@ -1,7 +1,7 @@
 [project]
 org-name = "laf"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["lafernando"]
 repository = "https://github.com/lafernando/algorithmia"
-keywords = ["algorithmia"]
+keywords = ["algorithmia", "algorithms", "ML", "AI", "machine learning", "artificial intelligence"]
 license = "Apache-2.0"
