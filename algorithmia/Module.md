@@ -6,17 +6,26 @@ Connects to Algorithmia APIs from Ballerina.
 import ballerina/io;
 import laf/algorithmia;
 
-endpoint algorithmia:Client client {
+algorithmia:Configuration config = {
    apiKey: "<API_KEY>"
 };
 
-public function main(string... args) {
-    algorithmia:AlgoResponse resp = check client->pipe("LgoBE/CarMakeandModelRecognition/0.3.15", "https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png");
-    io:println(resp.result);
-    io:println(resp.metadata);
+algorithmia:Client clientEP = new(config);
 
-    resp = check client->pipe("zskurultay/ImageSimilarity/0.1.4", ["https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png", "https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png"]);
-    io:println(resp.result);
-    io:println(resp.metadata);
+public function main(string... args) {
+    var resp = clientEP->pipe("LgoBE/CarMakeandModelRecognition/0.3.15", "https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png");
+    if (resp is algorithmia:AlgoResponse) {
+        io:println(resp.result);
+        io:println(resp.metadata);
+    } else {
+        io:println(resp);
+    }
+    resp = clientEP->pipe("zskurultay/ImageSimilarity/0.1.4", ["https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png", "https://www.cars.com/cstatic-images/car-pictures/maxWidth503/usc70toc041g021001.png"]);
+    if (resp is algorithmia:AlgoResponse) {
+        io:println(resp.result);
+        io:println(resp.metadata);
+    } else {
+        io:println(resp);
+    }
 }
 ```
